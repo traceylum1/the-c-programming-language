@@ -54,9 +54,9 @@ int main() {
         printf("%4d", i);
         for (j = 0; j < MAX_WORD_LEN; j++) {
             if (wc_arr[j] >= i) {
-                printf("  #");
+                printf("%3s", "#");
             } else {
-                printf("   ");
+                printf("%3s", "");
             }
         }
         printf("\n");
