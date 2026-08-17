@@ -4,6 +4,8 @@
 #include <stdio.h>
 
 #define MAXLINE 1000
+#define IN 1
+#define OUT 0
 
 int get_line(char line[], int maxline);
 void copy(char to[], char from[]);
@@ -35,10 +37,14 @@ int get_line(char line[], int maxline) {
     return i;
 }
 
+
 void trim(char to[], char from[]) {
-    int i;
-    i = 0;
-    while ((to[i] = from[i]) != '\0') {
-        ++i;
+    int i, j, last_char_idx, state;
+    i = j = 0;
+    state = OUT;
+    while (from[i] != '\0') {
+        // iterate through 'from' until non whitespace char found, then state is IN
+        // while state is IN, copy to 'to', keeping track of last_char_idx
     }
+    // add '\0' to last_char_idx position in 'to'
 }
