@@ -8,7 +8,7 @@
 #define OUT 0
 
 int get_line(char line[], int maxline);
-void copy(char to[], char from[]);
+void trim(char to[], char from[]);
 
 int main() {
     int len;    // current line length
@@ -18,7 +18,9 @@ int main() {
 
     max = 0;
     while ((len = get_line(line, MAXLINE)) > 0) {
-        
+        trim(trimmed, line);
+        printf("%s\n", line);
+        printf("%s\n", trimmed);
     }
     
     return 0;
@@ -37,14 +39,31 @@ int get_line(char line[], int maxline) {
     return i;
 }
 
-
 void trim(char to[], char from[]) {
     int i, j, last_char_idx, state;
     i = j = 0;
     state = OUT;
     while (from[i] != '\0') {
         // iterate through 'from' until non whitespace char found, then state is IN
+        if (state == OUT) {
+            if (from[i] != ' ' && from[i] != '\t') {
+                state = IN;
+                to[j] = from[i];
+                last_char_idx = j;
+                j++;
+            }
+            i++;
         // while state is IN, copy to 'to', keeping track of last_char_idx
+        } else {
+            if (from[i] != ' ' && from[i] != '\t') {
+                last_char_idx = j;
+            }
+            to[j] = from[i];
+            j++;
+            i++;
+        }
     }
-    // add '\0' to last_char_idx position in 'to'
+    // add termination char to end array after last_char_idx
+    to[++last_char_idx] = '\0';
+    return;
 }
