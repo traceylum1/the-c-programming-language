@@ -45,12 +45,12 @@ void detab(char from[], char to[], int len) {
         if (from[i] == '\t') {
             dist_from_col = TAB_STOPS - (j % TAB_STOPS);
             while (dist_from_col > 0) {
-                to[j++] = ' ';
+                to[j++] = '#';
                 dist_from_col--;
             }
         } else {
             to[j++] = from[i];
         }
     }
-    
+    to[j] = '\0';
 }
