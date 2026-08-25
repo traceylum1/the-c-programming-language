@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 #define MAXLINE 1000
-#define COLUMN_LEN 20
+#define COLUMN_LEN 5
 
 int get_line(char line[], int lim);
 void fold_line(char from[], char to[], int len);
@@ -48,7 +48,7 @@ void fold_line(char from[], char to[], int len) {
     last_bl = -1;
 
     for (i = 0; i < len; i++) {
-        if ((j - line_start) % COLUMN_LEN == 0) {
+        if (((j - line_start) % COLUMN_LEN == 0) && j != line_start) {
             if (last_bl == -1) {
                 to[j+1] = to[j-1];
                 to[j-1] = '-';
@@ -58,12 +58,13 @@ void fold_line(char from[], char to[], int len) {
             } else {
                 to[last_bl] = '\n';
                 line_start = last_bl + 1;
+                last_bl = -1;
             }
         } else {
             if (from[i] == ' ') {
                 last_bl = i;
             }
-            to[j] = from[i];
+            to[j++] = from[i];
         }
     }
 
