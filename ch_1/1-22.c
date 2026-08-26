@@ -48,24 +48,25 @@ void fold_line(char from[], char to[], int len) {
     last_bl = -1;
 
     for (i = 0; i < len; i++) {
-        if (((j - line_start) % COLUMN_LEN == 0) && j != line_start) {
-            if (last_bl == -1) {
-                to[j+1] = to[j-1];
-                to[j-1] = '-';
-                to[j] = '\n';
-                j += 2;
+        if (((j - line_start) % (COLUMN_LEN - 1) == 0) && j != line_start) {
+            if (from[i] == ' ' || from[i] == '\n') {
+                to[j++] = '\n';
+                line_start = j;
+                last_bl = -1;
+                continue;
+            } else if (last_bl == -1) {
+                to[j++] = '-';
+                to[j++] = '\n';
                 line_start = j;
             } else {
                 to[last_bl] = '\n';
                 line_start = last_bl + 1;
                 last_bl = -1;
             }
-        } else {
-            if (from[i] == ' ') {
-                last_bl = i;
-            }
-            to[j++] = from[i];
+        } else if (from[i] == ' '){
+            last_bl = j;
         }
+        to[j++] = from[i];
     }
 
     to[j] = '\0';
